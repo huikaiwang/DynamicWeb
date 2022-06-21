@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>MovieOrder</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+ 
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="app">
+  <div class="title">Movie Ordering</div>
+  <label class="backend"><b>Control Panel:</b>
+    <input v-model="editing" type="checkbox"/>
+    <div class="stock" :class="{showMode: !editing}" v-for="movie in movies">
+      <label>{{movie.name}}</label>
+      <input v-model.number="movie.stock" type="number" oninput="if(value.length>4)value=value.slice(0,4);if(value<0)value=0"/>
+    </div>
+  </label>  
+  <input class="search" v-model= "keyword" type="text" placeholder="請輸入關鍵字"/>
+  <div class="movie" @wheel.prevent="wheel($event)">
+    <div class="cards" v-if="keyword.length ==0">
+      <div class="card" v-for="movie in movies">
+        <div class="left">
+          <div class="cover" :style="bgcss(movie.cover)"></div>
+        </div>
+        <div class="right">
+          <h2>{{ movie.name }}</h2>
+          <h4>{{ movie.type }}</h4>
+          <p v-html="movie.description"></p>
+          <b class="price" style="color:red">NT${{ movie.price }}</b>
+          <input v-model.number="movie.minOrder" style="width:30px" type="number" oninput="if(value.length>4)value=value.slice(0,4);if(value<0)value=0" />
+          <button class="add"  style="background-color:red" @click="addCart(movie, $event, movie.minOrder) "><i class="fa fa-shopping-cart"></i> 加入購物車</button>
+        </div>
+      </div>
+    </div>
+    <div class="cards" v-else-if="keyword.length !=0">
+      <div class="card" v-for="movie in movies" v-if="movie.name.includes(keyword)">
+        <div class="left">
+          <div class="cover" :style="bgcss(movie.cover)"></div>
+        </div>
+        <div class="right">
+          <h2>{{ movie.name }}</h2>
+          <h4>{{ movie.type }}</h4>
+          <p v-html="movie.description"></p>
+          <b class="price" style="color:red">NT${{ movie.price }}</b>
+          <input v-model.number="movie.orderQty" style="width:30px" type="number" oninput="if(value.length>4)value=value.slice(0,4);if(value<0)value=0" />
+          <button class="add"  style="background-color:red" @click="addCart(movie, $event, movie.orderQty) "><i class="fa fa-shopping-cart"></i> 加入購物車</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="buybox" :style="bgcss(currentMovie.cover)" v-if="currentMovie"></div>
+  <div class="fixed-control" @click="isCartOpen=!isCartOpen">
+    <i class="fa fa-shopping-cart"></i>
+    <span>{{quantity}}</span>
+  </div>
+  <div class="control" v-if="isCartOpen">
+    <div class="panel">
+      <h2> Movie Cart </h2>
+      <button class="clearBtn"  style="background-color:white" @click="clearCart() "> Clear Cart </button>
+      <button class="checkBtn"  style="background-color:white" @click="checkOut=true "> Check Out </button>
+      <ul>
+        <li v-for="(movie,mid) in cart">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <button class="minus"  style="background-color:white" @click="cartMinus(movie) "> - </button>
+            <span>{{movie.qty}}</span>
+            <button class="plus"  style="background-color:white" @click="cartPlus(movie) "> + </button>
+            <button class="delete"  style="background-color:white" @click="deleteCart(movie) "> 刪除 </button>
+            <div class="price">${{movie.price * movie.qty}}</div>
+          </h3>
+        </li>
+        <li v-if="!cart.length">
+          <h3>Empty Cart</h3>
+        </li>
+      </ul>
+      <hr>
+      <h2>${{totalPrice}}</h2>
+    </div>
+    <div class="checkout" v-if="checkOut">
+        <button class="checkBtn"  style="background-color:white" @click="checkOut=false "> x </button>
+        <h2>Check Out</h2>
+        <p>You order {{quantity}} movies.</p>
+        <h2>Total:${{totalPrice}}</h2>
+    </div>
+  </div>
+</div>
+
+
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
+<script  src="./script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CBB107041 王輝凱</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="app">
+  <label><b>Control Panel:</b>
+    <input v-model="editing" type="checkbox"/>
+    <div class="panel" :class="{showMode: !editing}">
+      <label>價格設定與是否完售編輯：</label>
+      <br>
+      <label>基礎價格：
+        <input v-model.number= "basePrice" type="number" />
+      </label>
+      <label>服務費：
+        <input v-model.number= "serviceFee" type="number" />
+      </label><br>
+      <label v-for="(card, id) in cards">{{id+1}}
+        <input v-model="card.soldOut" type="checkbox"/>
+        <label>{{card.title}}</label>
+        <input v-model.number= "card.price" type="number" />
+      </label>
+    </div>
+  </label>
+  <label>搜尋相關：
+    <label>最小價錢：
+      <input v-model.number= "minPrice" type="number" />
+    </label>
+    <label>最大價錢：
+      <input v-model.number= "maxPrice" type="number" />
+    </label>
+    <label>關鍵字：
+      <input v-model= "keyword" type="text" placeholder="請輸入關鍵字"/>
+    </label>
+  </label>
+  <div class="menu">
+    <div class="cards">
+      <div class="card" v-for="card in cards">
+        <div v-if="card.price+basePrice>=minPrice && card.price+basePrice<=maxPrice">
+          <div v-if="keyword.length==0">
+            <img class="cover" :src="card.cover">
+            <div class="info">
+              <h3>{{card.title}} 
+                <div class="soldOut" v-if="card.soldOut">已售完</div>
+              </h3>
+              <div class="price">{{card.price + basePrice}}$
+                <div class="other">(+{{ serviceFee}}%服務費)</div>            
+              </div>
+            </div> 
+          </div>
+          <div v-else-if="keyword.length!=0 && card.title.includes(keyword)">
+            <img class="cover" :src="card.cover">
+            <div class="info">
+              <h3>{{card.title}} 
+                <div class="soldOut" v-if="card.soldOut">已售完</div>
+              </h3>
+              <div class="price">{{card.price + basePrice}}$
+                <div class="other">(+{{ serviceFee}}%服務費)</div>            
+              </div>
+            </div>             
+          </div>
+        </div> 
+      </div>   
+    </div>
+  </div>
+</div>  
+</div>
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.33/vue.cjs.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

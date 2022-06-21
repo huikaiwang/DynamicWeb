@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css?family=Tajawal");
+html, body {
+  background-color: #282f38;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: "Tajawal", serif;
+}
+
+.coffeeType {
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+  transition: 0.5s;
+  position: relative;
+}
+.coffeeType:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.coffeeType .num {
+  font-size: 60px;
+  flex: 1;
+  color: white;
+  font-weight: bold;
+  margin-right: 30px;
+}
+.coffeeType .cupContainer {
+  flex: 1;
+}
+.coffeeType .control {
+  flex: 2;
+}
+.coffeeType .cup {
+  border: 4px solid #fff;
+  border-top: none;
+  border-radius: 0px 0px 50px 50px;
+  margin: 10px;
+  padding-top: 5px;
+  margin-right: 50px;
+  width: 70px;
+  height: 50px;
+  position: relative;
+}
+.coffeeType .cup .ingradients {
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: hidden;
+  border-radius: 0px 0px 50px 50px;
+  width: 100%;
+  height: 100%;
+}
+.coffeeType .cup:before {
+  content: "";
+  display: block;
+  border: 4px solid #fff;
+  position: absolute;
+  border-radius: 0px 50px 50px 0px;
+  border-left: none;
+  width: 15px;
+  height: 20px;
+  left: 100%;
+  top: 40%;
+  transform: translateY(-50%);
+}
+.coffeeType .cup.mock {
+  width: 60px;
+  height: 90px;
+  border-radius: 0;
+}
+.coffeeType .cup.mock .ingradients {
+  border-radius: 0;
+}
+.coffeeType .cup.small {
+  width: 50px;
+  height: 40px;
+}
+.coffeeType .cup.big {
+  width: 80px;
+  height: 50px;
+}
+.coffeeType .coffee, .coffeeType .milk, .coffeeType .water, .coffeeType .bubble {
+  background-color: #66491a;
+}
+.coffeeType .bubble {
+  background-color: #eee;
+}
+.coffeeType .milk {
+  background-color: #f7d8bb;
+}
+.coffeeType .water {
+  background-color: #589bce;
+}
+.coffeeType.showMode input, .coffeeType.showMode label, .coffeeType.showMode select, .coffeeType.showMode br {
+  display: none;
+}
+.coffeeType.favorite:before {
+  content: "BEST";
+  border: 5px solid;
+  padding: 5px 3px;
+  line-height: 0.9;
+  display: block;
+  color: #ff5e5e;
+  position: absolute;
+  font-size: 30px;
+  transform: translateX(-70px) rotate(-20deg);
+}
+
+.hiddenControl {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+}

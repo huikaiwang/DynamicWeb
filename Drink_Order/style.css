@@ -1,0 +1,55 @@
+html, body {
+  font-family: 微軟正黑體,serif;
+  background-color: #e0feff;
+}
+.menu {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+.card {
+  display: inline-block;
+  vertical-align: top;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  margin: 10px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+
+.card .cover {
+  width: 220px;
+}
+
+.card .info {
+  padding: 10px;
+}
+.card .info h3 {
+  margin: 0;
+}
+
+.card .info .soldOut{
+  float:right;
+  opacity:1;
+  color:red;
+}
+
+.card .info .price {
+  font-size: 30px;
+}
+.card .info .price .other {
+  display: inline-block;
+  opacity: 0.4;
+  font-size: 16px;
+}
+
+.panel{
+  border-bottom: solid rgba(0, 0, 0, 0.1);;
+}
+
+.panel.showMode label, .panel.showMode input, .panel.showMode br{
+  display: none;
+}
